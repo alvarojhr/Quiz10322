@@ -6,6 +6,7 @@ Welcome to the main repository for the GreenTech project. GreenTech is a passion
 
 GreenTech is developing a software solution that promotes sustainability and encourages users to make greener choices in their daily lives. Our platform will connect users with green initiatives in their area, track carbon footprint, and offer suggestions to reduce it.
 
+Greentech publishes contributions, in the form of research articles, reviews, introductory overviews, and position papers on advances in the area of environmental modelling and software. Our aim is to improve our capacity to represent, understand, predict or manage the behaviour of natural environmental systems, including air, water, and land components, at all practical scales, and to communicate those improvements to a wide scientific and professional audience.
 ## Getting Started
 
 1. Clone this reposotory to your local machine.
