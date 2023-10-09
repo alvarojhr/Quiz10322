@@ -1,0 +1,15 @@
+#How to create a new branch in git
+To put it simply, the only thing you have to just have git installed, and through the cmd panel, you can do a lot of stuff, lets say that you already have
+forked our repository, and have the local version, now you just need to write the next command in to the cmd panel
+"git branch <name>"
+And thats it, to switch to the branch that you just created just type
+"git switch <name>"
+##Naming Convention for branches
+In this proyect, we wont use some extra special characters, just letters, preferably, lower case, no dashes or commas or a point. Like this examples
+"git branch "-Green-Tech-Branch""
+"git branch ".Green.Tech.Branch""
+"git branch "GREENTECHBRANCH""
+##How to test the canges before comitting
+Remove the changes that you don't want to push. Easiest done by using "stash" first, then removing the changes.
+Pull the latest state of the branch. Any conflicts are best handled at this time. Make sure that your code works with these changes.
+Push your complete code. You always push what you have tested.
