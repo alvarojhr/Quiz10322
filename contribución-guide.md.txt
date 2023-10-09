@@ -1,0 +1,345 @@
+Cómo crear una nueva rama en Git
+
+
+Esto creará una nueva rama a partir de la rama actual. El historial de la nueva rama comenzará en el lugar actual de la rama de la que "se ramificó".
+
+Suponiendo que actualmente te encuentras en una rama llamada master:
+
+(master)$ git checkout -b mi-función
+Switched to a new branch 'mi-función'
+(mi-función)$
+Aquí puedes ver una nueva rama creada llamada mi-función que se ramificó de master.
+
+Cómo cambiar a una rama existente en Git
+Para cambiar a una rama existente, puedes usar git checkout nuevamente (sin el indicador -b ) y pasar el nombre de la rama a la que desea cambiar:
+
+(mi-función)$ git checkout master
+Switched to branch 'master'
+(master)$
+También hay un atajo útil para volver a la rama anterior en la que estabas, pasando  -  a  git checkout en lugar de un nombre de rama:
+
+(mi-función)$ git checkout -
+Switched to branch 'master'
+(master)$ git checkout -
+Switched to branch 'mi-función'
+(mi-función)$
+Cómo salir una confirmación específica
+Para salir o cambiar una confirmación específica, también puedes usar  git checkout  y pasar el SHA de la confirmación en lugar de un nombre de rama.
+
+Después de todo, las ramas en realidad solo son indicadores y rastreadores de confirmaciones específicas en el historial de Git.
+
+Cómo encontrar un SHA de una confirmación
+Una forma de encontrar el SHA de una confirmación es ver el registro de Git.
+
+Puedes ver el registro usando el comando  git log:
+
+(mi-función)$ git log
+commit 94ab1fe28727b7f8b683a0084e00a9ec808d6d39 (HEAD -> mi-función, master)
+Author: John Mosesman <johnmosesman@gmail.com>
+Date:   Mon Apr 12 10:31:11 2021 -0500
+
+    Este es el segundo mensaje de confirmación.
+
+commit 035a128d2e66eb9fe3032036b3415e60c728f692 (blah)
+Author: John Mosesman <johnmosesman@gmail.com>
+Date:   Mon Apr 12 10:31:05 2021 -0500
+
+    Este es el primer mensaje de confirmación.
+En la primera línea de cada confirmación, después de la palabra commit, hay una larga cadena de caracteres y números: 94ab1fe28727...
+
+Esto se llama SHA. Un SHA es un identificador único que se genera para cada confirmación.
+
+Para ver una confirmación específica, solo necesitas pasar el SHA de la confirmación como parámetro para git checkout:
+
+(mi-función)$ git checkout 035a128d2e66eb9fe3032036b3415e60c728f692
+Note: switching to '035a128d2e66eb9fe3032036b3415e60c728f692'.
+
+Estás en estado de 'HEAD separada'. Puedes mirar a tu alrededor,
+hacer cambios experimental y confirmaciones, y puede descartar cualquier
+confirmación que realices en este estado sin afectar a ninguna rama
+cambiando de nuevo a una rama.
+
+Si deseas crear una nueva rama para retener las confirmaciones que creas, puedes
+hazlo (ahora o más tarde) usando-c con el comando switch. Ejemplo:
+
+  git switch -c <nombre-de-nueva-rama>
+
+O deshaz esta operación con:
+
+  git switch -
+
+Desactiva este consejo configurando el consejo de la variable de configuración. HEAD separada a falso
+
+HEAD ahora está en 035a128 a
+((HEAD separada en 035a128))$
+Nota: Por lo general, solo necesitas usar los primeros caracteres de SHA—ya que los primeros cuatro o cinco caracteres de la cadena probablemente sean únicos en todo el proyecto.
+¿Qué es un estado HEAD separada?
+El resultado de ver una confirmación específica lo coloca en un "estado HEAD separada".
+
+De la documentación:
+
+[un estado HEAD separada] significa simplemente que HEAD se refiere a una confirmación específica, en lugar de referirse a una rama nombrada
+Básicamente, HEAD (uno de los indicadores internos de Git que rastrea dónde se encuentra en el historial de Git) se ha desviado de las ramas conocidas, por lo que los cambios desde este punto formarían una nueva ruta en el historial de Git.
+
+Git quiere asegurarse de que eso es lo que pretendes, por lo que te brinda una especie de "espacio libre" para experimentar, como se describe en el resultado:
+
+Estás en estado de 'HEAD separada'. Puedes mirar a tu alrededor,
+hacer cambios experimental y confirmaciones, y puede descartar cualquier
+confirmación que realices en este estado sin afectar a ninguna rama
+cambiando de nuevo a una rama.
+Desde esta posición tienes dos opciones:
+
+Experimenta y luego desecha tus cambios volviendo a tu rama anterior
+Trabaja desde aquí y comienza una nueva rama desde este punto
+Puedes usar el comando git switch - para deshacer cualquier cambio que hayas realizado y volver a tu rama anterior.
+
+Si, en cambio, deseas mantener tus cambios y continuar desde aquí, puedes usar git switch -c <nueva-rama-nombre> para crear una nueva rama desde este punto.
+
+Conclusión
+El comando git checkout es un comando útil y multipropósito.
+
+Puedes usarlo para crear nuevas ramas, ver una rama, ver confirmaciones específicas y más.
+
+
+Una estrategia de bifurcación es una convención o un conjunto de reglas que especifican cuándo se crean las bifurcaciones.
+
+Ayuda a los equipos y desarrolladores al describir las pautas de nomenclatura de las ramas y explica qué uso deberían tener las ramas, y así sucesivamente.
+
+Debido a la falta de convenciones de nomenclatura adecuadas, el equipo de mantenimiento del código sufre numerosas confusiones y complicaciones.
+
+La convención de nomenclatura de ramificación de Git admite el crecimiento orgánico de una base de código de manera sistemática. Ayuda a separar el trabajo estratégicamente.
+
+Las dos amplias categorías de ramas de Git
+1. Ramas Regulares
+
+Disponible permanentemente en el repositorio, la convención de nomenclatura de las sucursales regulares es fácil y directa.
+
+Desarrollo (Dev)
+
+Dev, la rama de desarrollo principal, impide que los desarrolladores agreguen cambios directamente en la rama principal. Antes de fusionarse con el maestro, los cambios realizados en la rama de desarrollo se someten a revisiones y pruebas.
+
+Maestro
+
+La rama maestra es la rama predeterminada disponible en el repositorio de Git. Los miembros del equipo deben mantener la rama maestra estable y actualizada. Por lo general, es estable y no permite el check-in directo. La fusión es posible solo después de la revisión del código.
+
+QA o rama de prueba
+
+Esta rama contiene los códigos de control de calidad y las pruebas de automatización de los cambios implementados. Garantiza una base de código estable para el entorno de producción a través del proceso de prueba de control de calidad.
+
+2. Ramas temporales de Git
+
+Los miembros del equipo pueden crear y eliminar estas ramas cuando sea necesario.
+
+Arreglo del fallo
+Solución caliente
+Ramas de características
+Hay una gran cantidad de convenciones y formatos recomendados, seguir los cuales podría ser una tarea desafiante.
+
+Las mejores prácticas de la convención de nomenclatura de ramas de Git
+1. Comenzar el nombre de la sucursal con una palabra de categoría
+
+Uno de los mejores métodos para mejorar la eficiencia es agregar una palabra que categorice la rama. La idea general es usar palabras cortas. La selección de palabras podría ser cualquier cosa que se adapte a su sistema de trabajo.
+
+Use palabras de categoría como:
+
+WIP: trabajo en progreso y necesita su atención.
+Error: un error que debe corregirse de inmediato.
+Con la ayuda de la palabra de categoría, es fácil identificar el propósito de la rama de Git y atenderlo.
+
+2. Uso de identificaciones únicas de seguimiento de problemas en nombres de sucursales
+
+Prefijos como; revisión, función, tarea o cualquier otra variante para categorizar una tarea, aumentar el trabajo que requiere más toma de decisiones al nombrar.
+
+Con identificadores de seguimiento de problemas únicos, básicamente está marcando la categoría de la tarea en el seguimiento y agregando muchos contextos útiles.
+
+Los desarrolladores trabajan principalmente en varios problemas en un momento dado, y un rastreador de problemas ayuda a conectar la rama de trabajo con las tareas relevantes. Hace que el seguimiento del progreso del equipo sea muy fácil.
+
+El uso de una identificación de seguimiento de problemas externos en el nombre de la sucursal puede facilitar el seguimiento del progreso desde sistemas externos.
+
+3. Uso de separadores de guiones o barras
+
+La preferencia entre un separador de guiones, barras o guiones bajos se basa en su elección y la de su equipo. La idea es mantenerlo estrechamente consistente.
+
+Sin los separadores, los nombres se vuelven más difíciles de leer, creando confusión para el equipo.
+
+Usando separadores como guiones bajos, puede mejorar la legibilidad y hacer que el nombre sea más cómodo de manejar.
+
+Los separadores son especialmente más significativos si se trata de una gran cantidad de sucursales.
+
+4. Usar el nombre del autor en la rama de Git
+
+Numerosas empresas utilizan esta técnica de agregar el nombre del autor a los nombres de las sucursales.
+
+Este método ayuda a rastrear el trabajo de diferentes desarrolladores. Con más requisitos, también son posibles adiciones progresivas.
+
+Ejemplo - name_feature_new-experimental-changes
+5. Evite usar solo números
+
+Usar solo números en el Id. de problema del nombre de la sucursal puede generar más confusión para el equipo.
+
+Tal confusión durante el proceso de fusión de las ramas de Git puede generar muchos errores.
+
+6. Evite la convención de nomenclatura simultánea
+
+Mezclar o combinar convenciones de nomenclatura de ramas de Git solo genera complicaciones y hace que el proceso sea propenso a errores. La consistencia es un aspecto crítico, y el equipo debe mantener las convenciones decididas.
+
+7. Evita los nombres largos
+
+La precisión es el aspecto crucial de la denominación de ramas de Git. El nombre debe ser informativo y breve.
+
+Los nombres largos y detallados solo generan confusión y afectan la eficiencia.
+
+En lugar de wip_login_module_which_will_used_in_the_public_website, puede optar por wip_feature_login_module.
+Las prácticas para la asignación de nombres de ramificación de Git son efectivas solo con el compromiso de una aplicación adecuada. El elemento crítico es que el equipo se mantenga en la misma página y sea consistente en todas partes.
+
+Con el uso apropiado de las convenciones, usted y el equipo pueden mejorar notablemente la eficiencia y el flujo del trabajo.
+
+
+Guardando cambios en el Repositorio
+Guardando cambios en el Repositorio
+Ya tienes un repositorio Git y un checkout o copia de trabajo de los archivos de dicho proyecto. El siguiente paso es realizar algunos cambios y confirmar instantáneas de esos cambios en el repositorio cada vez que el proyecto alcance un estado que quieras conservar.
+
+Recuerda que cada archivo de tu repositorio puede tener dos estados: rastreados y sin rastrear. Los archivos rastreados (tracked files en inglés) son todos aquellos archivos que estaban en la última instantánea del proyecto; pueden ser archivos sin modificar, modificados o preparados. Los archivos sin rastrear son todos los demás - cualquier otro archivo en tu directorio de trabajo que no estaba en tu última instantánea y que no está en el área de preparación (staging area). Cuando clonas por primera vez un repositorio, todos tus archivos estarán rastreados y sin modificar pues acabas de sacarlos y aun no han sido editados.
+
+Mientras editas archivos, Git los ve como modificados, pues han sido cambiados desde su último commit. Luego preparas estos archivos modificados y finalmente confirmas todos los cambios preparados, y repites el ciclo.
+
+El ciclo de vida del estado de tus archivos.
+Figura 8. El ciclo de vida del estado de tus archivos.
+Revisando el Estado de tus Archivos
+La herramienta principal para determinar qué archivos están en qué estado es el comando git status. Si ejecutas este comando inmediatamente después de clonar un repositorio, deberías ver algo como esto:
+
+$ git status
+On branch master
+nothing to commit, working directory clean
+Esto significa que tienes un directorio de trabajo limpio - en otras palabras, que no hay archivos rastreados y modificados. Además, Git no encuentra archivos sin rastrear, de lo contrario aparecerían listados aquí. Finalmente, el comando te indica en cuál rama estás y te informa que no ha variado con respecto a la misma rama en el servidor. Por ahora, la rama siempre será “master”, que es la rama por defecto; no le prestaremos atención de momento. [ch03-git-branching] tratará en detalle las ramas y las referencias.
+
+Supongamos que añades un nuevo archivo a tu proyecto, un simple README. Si el archivo no existía antes y ejecutas git status, verás el archivo sin rastrear de la siguiente manera:
+
+$ echo 'My Project' > README
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+    README
+
+nothing added to commit but untracked files present (use "git add" to track)
+Puedes ver que el archivo README está sin rastrear porque aparece debajo del encabezado “Untracked files” (“Archivos no rastreados” en inglés) en la salida. Sin rastrear significa que Git ve archivos que no tenías en el commit anterior. Git no los incluirá en tu próximo commit a menos que se lo indiques explícitamente. Se comporta así para evitar incluir accidentalmente archivos binarios o cualquier otro archivo que no quieras incluir. Como tú sí quieres incluir README, debes comenzar a rastrearlo.
+
+Rastrear Archivos Nuevos
+Para comenzar a rastrear un archivo debes usar el comando git add. Para comenzar a rastrear el archivo README, puedes ejecutar lo siguiente:
+
+$ git add README
+Ahora si vuelves a ver el estado del proyecto, verás que el archivo README está siendo rastreado y está preparado para ser confirmado:
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+Puedes ver que está siendo rastreado porque aparece luego del encabezado “Cambios a ser confirmados” (“Changes to be committed” en inglés). Si confirmas en este punto, se guardará en el historial la versión del archivo correspondiente al instante en que ejecutaste git add. Anteriormente cuando ejecutaste git init, ejecutaste luego git add (files) - lo cual inició el rastreo de archivos en tu directorio. El comando git add puede recibir tanto una ruta de archivo como de un directorio; si es de un directorio, el comando añade recursivamente los archivos que están dentro de él.
+
+Preparar Archivos Modificados
+Vamos a cambiar un archivo que esté rastreado. Si cambias el archivo rastreado llamado “CONTRIBUTING.md” y luego ejecutas el comando git status, verás algo parecido a esto:
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+El archivo “CONTRIBUTING.md” aparece en una sección llamada “Changes not staged for commit” (“Cambios no preparado para confirmar” en inglés) - lo que significa que existe un archivo rastreado que ha sido modificado en el directorio de trabajo pero que aún no está preparado. Para prepararlo, ejecutas el comando git add. git add es un comando que cumple varios propósitos - lo usas para empezar a rastrear archivos nuevos, preparar archivos, y hacer otras cosas como marcar archivos en conflicto por combinación como resueltos. Es más útil que lo veas como un comando para “añadir este contenido a la próxima confirmación” más que para “añadir este archivo al proyecto”. Ejecutemos git add para preparar el archivo “CONTRIBUTING.md” y luego ejecutemos git status:
+
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+Ambos archivos están preparados y formarán parte de tu próxima confirmación. En este momento, supongamos que recuerdas que debes hacer un pequeño cambio en CONTRIBUTING.md antes de confirmarlo. Abres de nuevo el archivo, lo cambias y ahora estás listos para confirmar. Sin embargo, ejecutemos git status una vez más:
+
+$ vim CONTRIBUTING.md
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   CONTRIBUTING.md
+¡¿Pero qué…​?! Ahora CONTRIBUTING.md aparece como preparado y como no preparado. ¿Cómo es posible? Resulta que Git prepara un archivo de acuerdo al estado que tenía cuando ejecutas el comando git add. Si confirmas ahora, se confirmará la versión de CONTRIBUTING.md que tenías la última vez que ejecutaste git add y no la versión que ves ahora en tu directorio de trabajo al ejecutar git status. Si modificas un archivo luego de ejecutar git add, deberás ejecutar git add de nuevo para preparar la última versión del archivo:
+
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   README
+    modified:   CONTRIBUTING.md
+Estado Abreviado
+Si bien es cierto que la salida de git status es bastante explícita, también es verdad que es muy extensa. Git ofrece una opción para obtener un estado abreviado, de manera que puedas ver tus cambios de una forma más compacta. Si ejecutas git status -s o git status --short, obtendrás una salida mucho más simplificada.
+
+$ git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+Los archivos nuevos que no están rastreados tienen un ?? a su lado, los archivos que están preparados tienen una A y los modificados una M. El estado aparece en dos columnas - la columna de la izquierda indica el estado preparado y la columna de la derecha indica el estado sin preparar. Por ejemplo, en esa salida, el archivo README está modificado en el directorio de trabajo pero no está preparado, mientras que lib/simplegit.rb está modificado y preparado. El archivo Rakefile fue modificado, preparado y modificado otra vez por lo que existen cambios preparados y sin preparar.
+
+Ignorar Archivos
+A veces, tendrás algún tipo de archivo que no quieres que Git añada automáticamente o más aun, que ni siquiera quieras que aparezca como no rastreado. Este suele ser el caso de archivos generados automáticamente como trazas o archivos creados por tu sistema de compilación. En estos casos, puedes crear un archivo llamado .gitignore que liste patrones a considerar. Este es un ejemplo de un archivo .gitignore:
+
+$ cat .gitignore
+*.[oa]
+*~
+La primera línea le indica a Git que ignore cualquier archivo que termine en “.o” o “.a” - archivos de objeto o librerías que pueden ser producto de compilar tu código. La segunda línea le indica a Git que ignore todos los archivos que terminen con una tilde (~), la cual es usada por varios editores de texto como Emacs para marcar archivos temporales. También puedes incluir cosas como trazas, temporales, o pid directamente; documentación generada automáticamente; etc. Crear un archivo .gitignore antes de comenzar a trabajar es generalmente una buena idea, pues así evitas confirmar accidentalmente archivos que en realidad no quieres incluir en tu repositorio Git.
+
+Las reglas sobre los patrones que puedes incluir en el archivo .gitignore son las siguientes:
+
+Ignorar las líneas en blanco y aquellas que comiencen con #.
+
+Emplear patrones glob estándar que se aplicarán recursivamente a todo el directorio del repositorio local.
+
+Los patrones pueden comenzar en barra (/) para evitar recursividad.
+
+Los patrones pueden terminar en barra (/) para especificar un directorio.
+
+Los patrones pueden negarse si se añade al principio el signo de exclamación (!).
+
+Los patrones glob son una especie de expresión regular simplificada usada por los terminales. Un asterisco (*) corresponde a cero o más caracteres; [abc] corresponde a cualquier caracter dentro de los corchetes (en este caso a, b o c); el signo de interrogación (?) corresponde a un caracter cualquiera; y los corchetes sobre caracteres separados por un guión ([0-9]) corresponde a cualquier caracter entre ellos (en este caso del 0 al 9). También puedes usar dos asteriscos para indicar directorios anidados; a/**/z coincide con a/z, a/b/z, a/b/c/z, etc.
+
+Aquí puedes ver otro ejemplo de un archivo .gitignore:
+
+# ignora los archivos terminados en .a
+*.a
+
+# pero no lib.a, aun cuando había ignorado los archivos terminados en .a en la línea anterior
+!lib.a
+
+# ignora unicamente el archivo TODO de la raiz, no subdir/TODO
+/TODO
+
+# ignora todos los archivos del directorio build/
+build/
+
+# ignora doc/notes.txt, pero no este: doc/server/arch.txt
+doc/*.txt
+
+# ignora todos los archivos .txt del directorio doc/
+doc/**/*.txt
