@@ -20,3 +20,8 @@ We encourage and appreaciate contributions from the community. If you find any i
 ## License
 
 This project is licensed under the MIT License.
+
+## GreenTech's Mission
+1. find a way to reduce energy expenditure with solar panels
+2. redirect the office's water consumption by redistributing it as sanitary water
+3. Do not use a printer to view the documents.
