@@ -1,6 +1,6 @@
 # GreenTech Project Repository
 
-Welcome to the main repository for the GreenTech project. GreenTech is a passion-driven start-up aiming to change the world with environmentally frindly technology solutions. Our team, spread acros the globe, is commited to creating a sustainable tech environment.
+Welcome to the main repository for the GreenTech project. GreenTech is a passion-driven start-up aiming to change the world with environmentally friendly technology solutions. Our team, spread across the globe, is committed to creating a sustainable tech environment.
 
 ## Project Overview
 
@@ -8,15 +8,21 @@ GreenTech is developing a software solution that promotes sustainability and enc
 
 ## Getting Started
 
-1. Clone this reposotory to your local machine.
+1. Clone this repository to your local machine.
 2. Set up the required environment variables.
 3. Install the necessary dependencies.
 4. Run the application and browse through the local version of the platform.
 
+## Mission
+Reduce the impact of technology, innovation and development on the environment.
+Make all human lives greener, day by day, step by step. 
+Show that sustainability not only saves our planet but also gets profitable.
+
 ## Contributing
 
-We encourage and appreaciate contributions from the community. If you find any issues or have feature requests, please open an issue. If you wish to contribute directly, kindly submit a pull request.
+We encourage and appreciate contributions from the community. If you find any issues or have feature requests, please open an issue. If you wish to contribute directly, kindly submit a pull request.
 
 ## License
 
 This project is licensed under the MIT License.
+
