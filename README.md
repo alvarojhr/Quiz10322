@@ -8,15 +8,19 @@ GreenTech is developing a software solution that promotes sustainability and enc
 
 ## Getting Started
 
-1. Clone this reposotory to your local machine.
+1. Clone this repository to your local machine.
 2. Set up the required environment variables.
 3. Install the necessary dependencies.
 4. Run the application and browse through the local version of the platform.
 
 ## Contributing
 
-We encourage and appreaciate contributions from the community. If you find any issues or have feature requests, please open an issue. If you wish to contribute directly, kindly submit a pull request.
+We encourage and appreciate contributions from the community. If you find any issues our have feature requests, please open an issue. If you wish to contribute directly, kindly submit a pull request.
 
 ## License
 
 This project is licensed under the MIT License.
+ 
+GreenTech promotes eco-friendly technology.
+It drives green and sustainable choices.
+It seeks a cleaner future.
