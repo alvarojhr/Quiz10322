@@ -1,0 +1,1 @@
+para crear una nueva rama se necesita usar el comando git branch -M "el nombre de la rama" 
